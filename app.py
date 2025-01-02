@@ -16,11 +16,19 @@ db = SQLAlchemy(app)
 # Modèle pour stocker les données extraites sous forme de JSON
 class ExtractionData(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    extracted_text = db.Column(db.JSON, nullable=False)  # JSON au lieu de texte simple
+    prenom = db.Column(db.String(100), nullable=True)
+    nom = db.Column(db.String(100), nullable=True)
+    ddn = db.Column(db.String(50), nullable=True)
+    ville = db.Column(db.String(200), nullable=True)
+    numcin = db.Column(db.String(50), nullable=True)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
 
-    def __init__(self, extracted_text):
-        self.extracted_text = extracted_text
+    def __init__(self, prenom, nom, ddn, ville, numcin):
+        self.prenom = prenom
+        self.nom = nom
+        self.ddn = ddn
+        self.ville = ville
+        self.numcin = numcin
 
 
 # Route pour stocker les données extraites
@@ -31,12 +39,28 @@ def store_data():
         return jsonify({"error": "Aucune donnée reçue"}), 400
 
     try:
-        extracted_entry = ExtractionData(extracted_text=json.dumps(data))  # Stocker en JSON
+        # Extraction des champs individuels
+        prenom = data.get('prenom', 'Inconnu')
+        nom = data.get('nom', 'Inconnu')
+        ddn = data.get('ddn', 'N/A')
+        ville = data.get('ville', 'N/A')
+        numcin = data.get('numcin', 'N/A')
+
+        # Créer une nouvelle entrée avec des champs distincts
+        extracted_entry = ExtractionData(
+            prenom=prenom,
+            nom=nom,
+            ddn=ddn,
+            ville=ville,
+            numcin=numcin
+        )
+
         db.session.add(extracted_entry)
         db.session.commit()
         return jsonify({"message": "Données enregistrées avec succès"}), 201
+
     except Exception as e:
-        print(f"[ERROR] Erreur lors de l'insertion : {str(e)}")  # Log précis
+        print(f"[ERROR] Erreur lors de l'insertion : {str(e)}")
         db.session.rollback()
         return jsonify({"error": f"Erreur lors de l'insertion en base : {str(e)}"}), 500
 

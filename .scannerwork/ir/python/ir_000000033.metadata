@@ -1,0 +1,7 @@
+test_app.FlaskTestCase.test_store_data_no_payload
+false
+b7d1e69f7d9ed118bdd8da9b8c7823cc
+==
+assertEqual
+get_json
+post

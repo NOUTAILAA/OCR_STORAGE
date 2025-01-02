@@ -1,0 +1,7 @@
+test_app.FlaskTestCase.test_store_data
+false
+602e5e22e1220366033ad4ab51b0199e
+==
+assertEqual
+get_json
+post

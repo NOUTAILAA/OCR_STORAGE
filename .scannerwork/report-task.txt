@@ -1,0 +1,7 @@
+organization=aaanb
+projectKey=OCR-STORAGE
+serverUrl=https://sonarcloud.io
+serverVersion=8.0.0.58800
+dashboardUrl=https://sonarcloud.io/dashboard?id=OCR-STORAGE
+ceTaskId=AZQm5LMChAJHN2wT1kjp
+ceTaskUrl=https://sonarcloud.io/api/ce/task?id=AZQm5LMChAJHN2wT1kjp
